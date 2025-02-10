@@ -30,6 +30,10 @@ public class CustomerService implements UserDetailsService {
         return new User(customer.getEmail(), customer.getPassword(), new ArrayList<>());
     }
 
+    public Optional<CustomerEntity> findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
     public List<CustomerEntity> getAllCustomers() {
         return repository.findAll();
     }
