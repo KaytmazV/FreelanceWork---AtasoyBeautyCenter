@@ -5,7 +5,6 @@ import com.volkankaytmaz.atasoybeauty.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,6 @@ public class CustomerController {
     }
 
     @GetMapping("/getAll")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<CustomerEntity>> getAllCustomers(){
         List<CustomerEntity> customers = customerService.getAllCustomers();
         if (customers.isEmpty()) {
@@ -34,7 +32,6 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CustomerEntity> getCustomerById(@PathVariable long id) {
         CustomerEntity customer = customerService.getCustomerById(id);
         if (customer == null) {
@@ -45,21 +42,18 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CustomerEntity> createCustomer(@Valid @RequestBody CustomerEntity customer){
         CustomerEntity customerEntity = customerService.createCustomer(customer);
         return new ResponseEntity<>(customerEntity, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> deleteAllCustomers(){
         customerService.deleteAllCustomers();
         return new ResponseEntity<>("All customers deleted", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> deleteCustomerById(@PathVariable long id){
         if (customerService.getCustomerById(id) == null) {
             return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
@@ -70,7 +64,6 @@ public class CustomerController {
     }
 
     @PutMapping("/update")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CustomerEntity> customerUpdate(@Valid @RequestBody CustomerEntity customer){
         Optional<CustomerEntity> customerEntity = customerService.customerUpdate(customer);
         return customerEntity.map(entity -> new ResponseEntity<>(entity, HttpStatus.OK))
