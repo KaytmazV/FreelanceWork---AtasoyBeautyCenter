@@ -2,7 +2,10 @@ package com.volkankaytmaz.atasoybeauty.service;
 
 import com.volkankaytmaz.atasoybeauty.model.CustomerEntity;
 import com.volkankaytmaz.atasoybeauty.repository.CustomerRepository;
+import com.volkankaytmaz.atasoybeauty.security.JwtAuthenticationFilter;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
